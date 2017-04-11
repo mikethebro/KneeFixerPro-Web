@@ -1,8 +1,13 @@
-<script src="https://www.gstatic.com/firebasejs/3.7.5/firebase.js"></script>
-<script src="script.js"></script>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>KneeFixerPro</title>
+  </head>
+<body>
 <html>Hello World!</html>
 
-<form id="message-form" action="#">
+<form id="exercise-form" action="#">
     <div>
     	<label for="exercise">Exercise</label>
     	<input type="text" id="exercise">
@@ -13,3 +18,20 @@
     	Send
     </button>
 </form>
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/3.7.5/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyBs6Gxmg8j_wicTwOSZ-CToaBSAzo7X-kA",
+    authDomain: "kneefixerpro.firebaseapp.com",
+    databaseURL: "https://kneefixerpro.firebaseio.com",
+    projectId: "kneefixerpro",
+    storageBucket: "kneefixerpro.appspot.com",
+    messagingSenderId: "342257651978"
+  };
+  firebase.initializeApp(config);
+</script>
+<script src="scripts/main.js"></script>
+</body>
+</html>
