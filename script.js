@@ -8,9 +8,17 @@ var config = {
   messagingSenderId: "342257651978"
 };
 firebase.initializeApp(config);
+'use strict';
+
+//Initializes KneeFixerPro
+function KneeFixerPro() {
+  this.checkSetup();
+
+  this.initFirebase();
+}
 
 // Sets up shortcuts to Firebase features and initiate firebase auth.
-FriendlyChat.prototype.initFirebase = function() {
+KneeFixerPro.prototype.initFirebase = function() {
   // Shortcuts to Firebase SDK features.
   this.auth = firebase.auth();
   this.database = firebase.database();
@@ -19,15 +27,15 @@ FriendlyChat.prototype.initFirebase = function() {
   this.auth.onAuthStateChanged(this.onAuthStateChanged.bind(this));
 };
 
-// Signs-in Friendly Chat.
-FriendlyChat.prototype.signIn = function() {
+// Signs-in KneeFixerPro
+KneeFixerPro.prototype.signIn = function() {
   // Sign in Firebase using popup auth and Google as the identity provider.
   var provider = new firebase.auth.GoogleAuthProvider();
   this.auth.signInWithPopup(provider);
 };
 
-// Signs-out of Friendly Chat.
-FriendlyChat.prototype.signOut = function() {
+// Signs-out of KneeFixerPro
+KneeFixerPro.prototype.signOut = function() {
   // Sign out of Firebase.
   this.auth.signOut();
 };
