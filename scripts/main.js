@@ -1,10 +1,8 @@
-'use strict';
-
 //Initializes KneeFixerPro
+'use strict';
 function KneeFixerPro()
 {
   this.checkSetup();
-
   //Shortcuts to DOM elements
   this.exerciseForm = document.getElementById('exercise-form');
   this.exerciseInput = document.getElementById('exercise');
@@ -55,7 +53,7 @@ KneeFixerPro.prototype.checkSignedInWithMessage = function()
     message: 'You must sign-in first',
     timeout: 2000
   };
-  this.signInSnackbar.MaterialSnackbar.showSnackbar(data);
+  //this.signInSnackbar.MaterialSnackbar.showSnackbar(data);
   return false;
 };
 
@@ -79,15 +77,14 @@ KneeFixerPro.prototype.loadExercises= function()
 KneeFixerPro.prototype.saveExercise = function(e)
 {
   e.preventDefault();
-  alert('saving entry!');
   // Check that the user entered a message and is signed in.
-  if (this.exerciseInput.value && this.checkSignedInWithMessage())
+  if (this.exerciseInput.value) //&& this.checkSignedInWithMessage())
   {
     // Add a new message entry to the Firebase Database.
     this.exercisesRef.push(
     {
       exercise: this.exerciseInput.value,
-      times: this.times.value,
+      times: this.timesInput.value,
       done: 0,
     }
     ).then(function() {
@@ -97,15 +94,59 @@ KneeFixerPro.prototype.saveExercise = function(e)
     }.bind(this)).catch(function(error) {
       console.error('Error writing new message to Firebase Database', error);
     });
+  }
+};
 
-  }
-  else if (this.exerciseInput.value)
+KneeFixerPro.prototype.onAuthStateChanged = function(user) {
+  /*if (user) { // User is signed in!
+    // Get profile pic and user's name from the Firebase user object.
+    var profilePicUrl = null;   // TODO(DEVELOPER): Get profile pic.
+    var userName = null;        // TODO(DEVELOPER): Get user's name.
+
+    // Set the user's profile pic and name.
+    this.userPic.style.backgroundImage = 'url(' + profilePicUrl + ')';
+    this.userName.textContent = userName;
+
+    // Show user's profile and sign-out button.
+    this.userName.removeAttribute('hidden');
+    this.userPic.removeAttribute('hidden');
+    this.signOutButton.removeAttribute('hidden');
+
+    // Hide sign-in button.
+    this.signInButton.setAttribute('hidden', 'true');
+
+    // We load currently existing chant messages.
+    this.loadMessages();
+
+    // We save the Firebase Messaging Device token and enable notifications.
+    this.saveMessagingDeviceToken();
+  } else { // User is signed out!
+    // Hide user's profile and sign-out button.
+    this.userName.setAttribute('hidden', 'true');
+    this.userPic.setAttribute('hidden', 'true');
+    this.signOutButton.setAttribute('hidden', 'true');
+
+    // Show sign-in button.
+    this.signInButton.removeAttribute('hidden');
+  }*/
+};
+
+// Checks that the Firebase SDK has been correctly setup and configured.
+KneeFixerPro.prototype.checkSetup = function()
+{
+  if (!window.firebase || !(firebase.app instanceof Function) || !window.config)
   {
-    alert('need to be signed in!');
+    window.alert('You have not configured and imported the Firebase SDK. ' +
+        'Make sure you go through the codelab setup instructions.');
   }
-  else
+  else if (config.storageBucket === '')
   {
-    alert('no text in field!');
+    window.alert('Your Cloud Storage bucket has not been enabled. Sorry about that. This is ' +
+        'actually a Firebase bug that occurs rarely. ' +
+        'Please go and re-generate the Firebase initialisation snippet (step 4 of the codelab) ' +
+        'and make sure the storageBucket attribute is not empty. ' +
+        'You may also need to visit the Storage tab and paste the name of your bucket which is ' +
+        'displayed there.');
   }
 };
 
