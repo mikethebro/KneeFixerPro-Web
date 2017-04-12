@@ -15,6 +15,7 @@ function KneeFixerPro() {
 
 
   this.initFirebase();
+  this.loadExercises();
 }
 
 // Sets up shortcuts to Firebase features and initiate firebase auth.
@@ -53,14 +54,51 @@ KneeFixerPro.prototype.checkSignedInWithMessage = function() {
   return false;
 };
 
+KneeFixerPro.prototype.loadExercises= function() {
+  // Reference to the /messages/ database path.
+  this.exercisesRef = this.database.ref('exercises');
+  // Make sure we remove all previous listeners.
+  this.exercisesRef.off();
+
+  // Loads the last 12 messages and listen for new ones.
+  /*var setMessage = function(data) {
+    var val = data.val();
+    this.displayMessage(data.key, val.name, val.text, val.photoUrl, val.imageUrl);
+  }.bind(this);
+  this.messagesRef.limitToLast(12).on('child_added', setMessage);
+  this.messagesRef.limitToLast(12).on('child_changed', setMessage);*/
+};
+
 // Saves a new exercise on the Firebase DB.
 KneeFixerPro.prototype.saveExercise = function(e) {
   e.preventDefault();
   // Check that the user entered a message and is signed in.
   if (this.exerciseInput.value && this.checkSignedInWithMessage()) {
-
-    // TODO(DEVELOPER): push new message to Firebase.
+    // Add a new message entry to the Firebase Database.
+    this.messagesRef.push({
+      exercise: this.exerciseInput.value,
+      times: this.times.value,
+    }).then(function() {
+      // Clear message text field and SEND button state.
+      KneeFixerPro.resetMaterialTextfield(this.messageInput);
+      this.toggleButton();
+    }.bind(this)).catch(function(error) {
+      console.error('Error writing new message to Firebase Database', error);
+    });
 
   }
 };
 
+// Saves the messaging device token to the datastore.
+KneeFixerPro.prototype.saveMessagingDeviceToken = function() {
+  // TODO(DEVELOPER): Save the device token in the realtime datastore
+};
+
+// Requests permissions to show notifications.
+KneeFixerPro.prototype.requestNotificationsPermissions = function() {
+  // TODO(DEVELOPER): Request permissions to send notifications.
+};
+
+window.onload = function() {
+  window.kneefixerpro = new KneeFixerPro();
+};
