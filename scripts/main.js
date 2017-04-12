@@ -75,10 +75,13 @@ KneeFixerPro.prototype.saveExercise = function(e) {
   // Check that the user entered a message and is signed in.
   if (this.exerciseInput.value && this.checkSignedInWithMessage()) {
     // Add a new message entry to the Firebase Database.
-    this.messagesRef.push({
+    this.exercisesRef.push(
+    {
       exercise: this.exerciseInput.value,
       times: this.times.value,
-    }).then(function() {
+      done: 0,
+    }
+    ).then(function() {
       // Clear message text field and SEND button state.
       KneeFixerPro.resetMaterialTextfield(this.messageInput);
       this.toggleButton();
