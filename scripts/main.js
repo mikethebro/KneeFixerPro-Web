@@ -1,7 +1,8 @@
 'use strict';
 
 //Initializes KneeFixerPro
-function KneeFixerPro() {
+function KneeFixerPro()
+{
   this.checkSetup();
 
   //Shortcuts to DOM elements
@@ -19,7 +20,8 @@ function KneeFixerPro() {
 }
 
 // Sets up shortcuts to Firebase features and initiate firebase auth.
-KneeFixerPro.prototype.initFirebase = function() {
+KneeFixerPro.prototype.initFirebase = function()
+{
   // Shortcuts to Firebase SDK features.
   this.auth = firebase.auth();
   this.database = firebase.database();
@@ -29,20 +31,23 @@ KneeFixerPro.prototype.initFirebase = function() {
 };
 
 // Signs-in KneeFixerPro
-KneeFixerPro.prototype.signIn = function() {
+KneeFixerPro.prototype.signIn = function()
+{
   // Sign in Firebase using popup auth and Google as the identity provider.
   var provider = new firebase.auth.GoogleAuthProvider();
   this.auth.signInWithPopup(provider);
 };
 
 // Signs-out of KneeFixerPro
-KneeFixerPro.prototype.signOut = function() {
+KneeFixerPro.prototype.signOut = function()
+{
   // Sign out of Firebase.
   this.auth.signOut();
 };
 
 // Returns true if user is signed-in. Otherwise false and displays a message.
-KneeFixerPro.prototype.checkSignedInWithMessage = function() {
+KneeFixerPro.prototype.checkSignedInWithMessage = function()
+{
   /* TODO(DEVELOPER): Check if user is signed-in Firebase. */
 
   // Display a message to the user using a Toast.
@@ -54,7 +59,8 @@ KneeFixerPro.prototype.checkSignedInWithMessage = function() {
   return false;
 };
 
-KneeFixerPro.prototype.loadExercises= function() {
+KneeFixerPro.prototype.loadExercises= function()
+{
   // Reference to the /messages/ database path.
   this.exercisesRef = this.database.ref('exercises');
   // Make sure we remove all previous listeners.
@@ -70,10 +76,13 @@ KneeFixerPro.prototype.loadExercises= function() {
 };
 
 // Saves a new exercise on the Firebase DB.
-KneeFixerPro.prototype.saveExercise = function(e) {
+KneeFixerPro.prototype.saveExercise = function(e)
+{
   e.preventDefault();
+  alert('saving entry!');
   // Check that the user entered a message and is signed in.
-  if (this.exerciseInput.value && this.checkSignedInWithMessage()) {
+  if (this.exerciseInput.value && this.checkSignedInWithMessage())
+  {
     // Add a new message entry to the Firebase Database.
     this.exercisesRef.push(
     {
@@ -90,18 +99,29 @@ KneeFixerPro.prototype.saveExercise = function(e) {
     });
 
   }
+  else if (this.exerciseInput.value)
+  {
+    alert('need to be signed in!');
+  }
+  else
+  {
+    alert('no text in field!');
+  }
 };
 
 // Saves the messaging device token to the datastore.
-KneeFixerPro.prototype.saveMessagingDeviceToken = function() {
+KneeFixerPro.prototype.saveMessagingDeviceToken = function()
+{
   // TODO(DEVELOPER): Save the device token in the realtime datastore
 };
 
 // Requests permissions to show notifications.
-KneeFixerPro.prototype.requestNotificationsPermissions = function() {
+KneeFixerPro.prototype.requestNotificationsPermissions = function()
+{
   // TODO(DEVELOPER): Request permissions to send notifications.
 };
 
-window.onload = function() {
+window.onload = function()
+{
   window.kneefixerpro = new KneeFixerPro();
 };
