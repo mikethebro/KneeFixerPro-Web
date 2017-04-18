@@ -95,6 +95,8 @@ KneeFixerPro.prototype.saveExercise = function(e)
       console.error('Error writing new message to Firebase Database', error);
     });
   }
+  this.exerciseInput.value = ""
+  this.timesInput.value = ""
 };
 
 KneeFixerPro.prototype.onAuthStateChanged = function(user) {
