@@ -7,6 +7,7 @@ function KneeFixerPro()
   this.exerciseForm = document.getElementById('exercise-form');
   this.exerciseInput = document.getElementById('exercise');
   this.timesInput = document.getElementById('times');
+  this.descriptionInput = document.getElementById('description');
   this.submitButton = document.getElementById('submit');
 
   //Save message on form submit.
@@ -85,6 +86,7 @@ KneeFixerPro.prototype.saveExercise = function(e)
     {
       exercise: this.exerciseInput.value,
       times: this.timesInput.value,
+      description: this.descriptionInput.value,
       done: 0,
     }
     ).then(function() {
@@ -97,6 +99,7 @@ KneeFixerPro.prototype.saveExercise = function(e)
   }
   this.exerciseInput.value = ""
   this.timesInput.value = ""
+  this.descriptionInput.value = ""
 };
 
 KneeFixerPro.prototype.onAuthStateChanged = function(user) {
