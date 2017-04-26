@@ -31,11 +31,11 @@
           <form id="exercise-form" action="#">
       <div class="field half first">
       <label for="exercise">Exercise</label>
-      <input type="text" id="exercise" placeholder="Exercise">
+      <input type="text" onkeypress='return (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || event.charCode == 32'id="exercise" placeholder="Exercise">
     </div>
     <div class="field half">
       <label for="times">Times per Day</label>
-      <input type="text" id="times" placeholder="Times">
+      <input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57' id="times" placeholder="Times">
     </div>
     <div>
       <label for="description">Exercise Description</label>
